@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+	
+	<head>		
+		<title>Random Circles</title>
+		<style type="text/css"> 
+			canvas {  
+			     border: 1px solid #000000
+				 }
+		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="./classes/arrow.html"></script>
+		<script src="./classes/utils.html"></script>
+		<script type="text/javascript">
+		
+			//create initiation function
+			function init() {
+				//Assign the canvas element  to a variable
+				var canvas = document.getElementById("myCanvas");
+				//Assign the 2d rendering context to a variable
+				var context = canvas.getContext("2d");
+				
+				//Allows line drawing in canvas
+				//var sketch = document.querySelector('#sketch');
+				//var sketch_style = getComputedStyle(sketch);
+				
+				//Mouse tracking to x and y coords
+				var mouse = {x: 0, y: 0};
+				var last_mouse = {x: 0, y: 0};
+
+				/* Mouse Capturing Work */
+				myCanvas.addEventListener('mousemove', function(e) {
+					last_mouse.x = mouse.x;
+					last_mouse.y = mouse.y;
+					mouse.x = e.pageX - this.offsetLeft;
+					mouse.y = e.pageY - this.offsetTop;
+				}, false);
+
+				myCanvas.addEventListener('mousedown', function(e) {
+					myCanvas.addEventListener('mousedown', drawCircle, false);
+					console.log("Mouse Down");
+				}, false);
+				
+				//Draws The Circle
+				var drawCircle = function() {				
+				x = mouse.x; 										
+				y = mouse.y;
+				//Math.floor == Round a number downward to its nearest integer
+				//Random radius between 1 - 100
+				radius =  Math.floor((Math.random() * 100) + 1);
+				startAngle = 0;
+				endAngle = 2*Math.PI;
+				counterClockwise = false;
+					
+				context.beginPath();
+				//arc draws the circles
+				context.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+				context.lineWidth = 10;
+				//RANDOM COLOUR GENERATOR!
+				context.strokeStyle = "#"+((1<<24)*Math.random()|0).toString(16);
+				context.stroke();
+				context.closePath();
+			};
+			};
+    </script>
+	</head>
+	<body onload="init()">
+		<canvas id="myCanvas" width="500" height="500">
+			Canvas is not supported
+		</canvas>
+	</body>
+
+</html>				
